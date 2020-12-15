@@ -1,0 +1,482 @@
+﻿@charset "UTF-8";
+
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\MIXINS, FUNCTIONS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+
+
+@font-face {
+    font-family: "Hylia Serif Beta";
+    src: url("/assets/HyliaSerifBeta-Regular.otf") format("opentype");
+}
+
+@mixin orange-border {
+    border-color: orangered;
+    border-width: 2px;
+    border-style: solid;
+}
+
+@mixin blue-border {
+    border-color: steelblue;
+    border-width: 2px;
+    border-style: solid;
+}
+
+@mixin black-border {
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+
+    }
+
+.clearfix::after{
+    content:"";
+    clear:both;
+    display:table;
+}
+
+$wrapper-padding: 3%;
+$dungeon-color: #fcfcfc;
+$ground-color: #fcd8a8;
+$water-color: #2038ec ;
+
+$text-bg-color: #E2EEFD6F;
+$text-color: black;
+
+@mixin wrapper{
+    margin-left:$wrapper-padding;
+    margin-right:$wrapper-padding;
+    padding-left:$wrapper-padding;
+    padding-right:$wrapper-padding;
+}
+
+@mixin text-bg {
+    color:$text-color;
+    background-color: $text-bg-color;
+    border-radius: 1em;
+    backdrop-filter: blur(10px);
+    
+}
+$nav-radius: 10px;
+
+$breakpoint: 450px;
+$breakpoint-m: 700px;
+$breakpoint-l: 992px;
+$breakpoint-xl: 1200px;
+
+
+    @function px-to-em($target) {
+        $em-context: ($breakpoint-xl/1px*.009) * 1px;
+        @return ($target/$em-context) * 1em;
+    }
+
+    @function px-to-vw($target) {
+        $vw-context: ($breakpoint/1px*.009) * 1px;
+        @return ($target/$vw-context) * 1vw;
+    }
+
+
+    @function px-to-percent($target) {
+        $percent-context: ($breakpoint/1px*.009) * 1px;
+        @return ($target/$percent-context) * 1%;
+    }
+
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\LAYOUT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/    
+
+.flex-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    height:100%;
+    
+}
+
+    html {
+    
+        font-family:Georgia, serif;
+        height:100%;
+    
+    }
+    body{
+        
+        display:flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        height: 100%;   
+        >*{
+            margin-top:none;
+            margin-bottom: none;
+        }
+    }
+    
+    main{
+        flex: 1 0 auto;
+    }
+    header,footer{
+        
+        flex-shrink:0;
+    }
+    .svgrid-div{
+        height:100%;
+    }
+
+    
+    /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+    #header-flex {
+        
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-content:flex-end;
+        
+
+    }
+
+header {
+    position:relative;
+    width:100%;
+    background-color:$dungeon-color;
+    font-family: 'Hylia Serif Beta';
+> *{
+    position: relative;
+    z-index:1;
+}
+.svgrid-div{
+    z-index: 0;
+}
+
+}
+
+
+    #boss-name-health {
+        box-sizing: content-box;
+        text-align: center;
+        width:80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        
+        align-self:center;
+
+        
+
+        > * {
+            margin:0;
+        }
+    }
+
+
+    #boss-name{
+    
+        @include text-bg();
+        > *{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+    }
+    #boss-health {
+        color: gold;
+        
+     
+        border-radius: 3em;
+        border: 1px solid groove;
+        background-color: gold;
+        height:5px;
+        
+    }
+
+   
+/*chrome flexbox fucks with svg viewbox*/
+//so does grid justify and stuff
+    
+    #character {
+        width: 11em;
+        float: left;
+        display: grid;
+        grid-template-rows: 2fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    #stats {
+        display: inline-flex;
+        flex-direction: column;
+    }
+
+
+    #fantasy-dan-pic {
+        display: inline;
+        grid-area: 1 /1 /3 /3;
+    }
+
+    #magic {
+        grid-area: 2/2/3/3;
+        border: 1px solid black;
+        background-color: lawngreen;
+        border-radius: 7px;
+        height: 1em;
+        width:5em;
+    }
+
+
+    #hearts {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        grid-area: 1 /2/ 2 / 3;
+    }
+
+    .heart-container {
+        margin-right: 2px;
+    }
+
+    #heart {
+        position: relative;
+        width: px-to-em(10px);
+        height: px-to-em(9px);
+    }
+
+    #heart:before,
+    #heart:after {
+        position: absolute;
+        content: "";
+        left: px-to-em(5px);
+        top: 0;
+        width: px-to-em(5px);
+        height: px-to-em(8px);
+        background: red;
+        border-radius: px-to-em(5px) px-to-em(5px) 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+    }
+
+    #heart:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+    }
+
+#minimap {
+    background-color: $dungeon-color;
+    border-radius: $nav-radius;
+}
+
+    $circle: 5em;
+ 
+    #fantasy-dan-pic,
+    #minimap{
+        display: inline;
+        width: $circle;
+        height: $circle;
+    }
+
+    nav{
+        align-self:flex-end;
+        margin-left:auto;
+    }
+
+    #nav-list {
+        margin-block-start:unset;
+        margin-block-end:unset;
+        display: flex;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+        /*float: right;*/
+
+        li {
+            /*@include blue-border; */
+            border-radius:$nav-radius;
+            border: 1px solid black;
+            border-bottom: none;
+            background-color: $dungeon-color;
+            flex-direction: row;
+            padding: .5em;
+        }
+    }
+    /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\CONTENT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+
+h2{
+    font-family:'Hylia Serif Beta';
+}
+    body{
+        background-color:$ground-color;
+    
+    }
+    
+    .content{
+        display:flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    .tab{
+        @include wrapper;
+        @include text-bg;
+        
+    }
+
+    #front{
+    @include text-bg;
+    }
+
+    
+//for the footer
+.flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+footer {
+    color: white;
+    text-align: center;
+    justify-content: center;
+    background-color: $water-color;
+
+    a {
+        color: white;
+       
+    }
+    
+  
+   ul{
+       display:flex;
+       flex-direction: column;
+       justify-content: center;
+       padding:0;
+       list-style: none;
+   }
+    li {
+        
+       
+        
+       
+        font-family: 'Hylia Serif Beta';
+    }
+}
+    
+
+
+  /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\SVGRIDS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+  /* header>*,
+  main>*,
+  footer>*{
+      
+  } */
+header{
+    z-index:1 ;
+}
+  
+  
+
+  .svg{
+    
+    display: none;
+   
+    
+}
+footer{
+    position: relative;
+    z-index: -1;
+    .footer-content{
+        position: relative;
+      
+    }
+
+}
+.sprite-svg{
+   width: 45px;
+   height:45px
+}
+/* .sprite-use{
+    width:60px;
+    height:60px;
+} */
+.svgrid-div {
+    margin:auto;
+    position: absolute;
+    display: grid;
+    grid-auto-flow: column;
+    z-index: -1;
+    /* grid-template-columns: repeat(auto-fit, minmax(15px, 60px));
+    grid-template-rows: repeat(auto-fit, minmax(15px, 60px)); */
+    //maybe if i put these in the media queries they will refresh in order to make the rows even?
+   
+}
+
+
+
+.right{
+    order:10;
+}
+
+
+
+
+
+
+  /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\MEDIA QUERIES\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+
+    @media (min-width: $breakpoint) {
+    }
+
+    @media (min-width: $breakpoint-m) {
+        .tab{
+            min-width: 30%;
+            max-width: 50%;
+        }
+        header{
+            width:100%;
+        }
+
+ #minimap{
+      order:5;
+  } 
+  
+  
+  #boss-name-health{
+    width: 60%;
+    margin-left: 20%;
+    margin-right:20%;
+  }
+    
+}
+ 
+    
+    @media (min-width: $breakpoint-l) {
+        
+    }
+
+        @media (min-width: $breakpoint-xl) {
+           
+            #character {
+                order: -1;
+            }
+
+
+            #boss-name-health {
+                
+                
+                
+                position: absolute;
+                margin-left: unset;
+                margin-right: unset;
+                width:30%;
+                right: 35%;
+                left: 35%;
+            }
+
+            nav{
+                max-width: 30%;
+            }
+
+            header {
+                position: sticky;
+                top: 0;
+            }
+        }
+    
+

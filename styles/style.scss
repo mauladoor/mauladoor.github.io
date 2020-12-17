@@ -81,7 +81,9 @@ $breakpoint-xl: 1200px;
     }
 
 /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\LAYOUT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/    
-
+li{
+    list-style:none;
+}
 .flex-container{
     display:flex;
     flex-direction:column;
@@ -310,11 +312,19 @@ h2{
         flex-direction: row;
         justify-content: space-evenly;
     }
+
+
     .tab{
         @include wrapper;
         @include text-bg;
         
     }
+
+    .hide {
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+     }
 
     #front{
     @include text-bg;
@@ -346,13 +356,9 @@ footer {
        flex-direction: column;
        justify-content: center;
        padding:0;
-       list-style: none;
+      
    }
     li {
-        
-       
-        
-       
         font-family: 'Hylia Serif Beta';
     }
 }

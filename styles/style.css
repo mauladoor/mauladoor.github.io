@@ -11,6 +11,10 @@
 }
 
 /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\LAYOUT\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+li {
+  list-style: none;
+}
+
 .flex-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -304,6 +308,12 @@ body {
           backdrop-filter: blur(10px);
 }
 
+.hide {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
 #front {
   color: black;
   background-color: #E2EEFD6F;
@@ -350,7 +360,6 @@ footer ul {
       -ms-flex-pack: center;
           justify-content: center;
   padding: 0;
-  list-style: none;
 }
 
 footer li {

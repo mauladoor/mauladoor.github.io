@@ -1,27 +1,73 @@
-const navclickopts = {
-    capture: true,
-    once: false,
-    passive: false
 
-};
- 
- 
- const navclicker=document.querySelector("nav");
- navclicker.addEventListener("click", changeTabs);
- console.log(navclicker);
+    /* 
 
- function changeTabs(event){
-     let tabname= event.target.id;
-     console.log(tabname);
+    
+    then set the clicked tab to the modselected var
 
-     let tabselect=document.querySelector(`#${tabname}`);
-     /* have an array of the 2 tabs to display
-     if the array has 2 tabs when a new one is clicked, delete the first and push the new one
-     if the array already contains the tab that is clicked, delete the other element so one array takes up the whole space
+    if var1==var2 then add class widetab
+    else remove showtab from the modselected var and then set it to the new tab and add showtab
+    */
+const tabobj={
+        
+        
+        modselect:0,
+        tabnames:["landing", "wip"],
+        tabselects:[document.querySelector("#landing"), document.querySelector("#wip")],
+        doubleclick:false,
+        
+        
+        changeTabs(event){
+            
 
-     else just push the new tab into the array
-     */
-}
+            let targetselect=event.target;
+            let newtabname=targetselect.className;
+            let newtabselect;
+            console.log(tabobj.newtabname);
+        
+            let tabidex=tabobj.tabnames.indexOf(newtabname);
+
+            //if one of the previous 2 tabs clicked was the current tab
+            if(tabidex>-1){
+                newtabselect=tabobj.tabselects[tabidex];
+                newtabselect.classList.add("double-clicked-tab");
+                if(!tabobj.doubleclick){
+                tabobj.tabselects[+(!tabidex)].classList.add("hide");
+                }
+                tabobj.tabnames=[newtabname, newtabname];
+                tabobj.tabselects=[newtabselect, newtabselect];
+                tabobj.doubleclick=true;
+            }
+
+            else{
+                newtabselect=document.querySelector(`#${newtabname}`);
+
+                if(!tabobj.doubleclick){
+                tabobj.tabselects[0].classList.add("hide");}
+
+                newtabselect.classList.remove("hide");
+            
+                tabobj.tabnames=[tabobj.tabnames[1],newtabname];
+                tabobj.tabselects=[tabobj.tabselects[1], newtabselect];
+                tabobj.doubleclick=false;
+            }
+
+            //either way, we record what this tab was and alternate for next time
+            
+            
+            console.log(tabobj);   
+        }
+    }
+
+    
+    const changeTabs=tabobj.changeTabs;
+    const navclicker=document.querySelector("nav");
+    navclicker.addEventListener("click", changeTabs);
+
+
+
+
+
+
 
 
  const debug = false;

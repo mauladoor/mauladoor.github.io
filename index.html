@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <link href="styles/sanitize.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
     <link href="styles/style.css" type="text/css" rel="stylesheet" />
     
     <link href="assets/HyliaSerifBeta-Regular.otf" type="font/otf" rel="stylesheet">
@@ -72,19 +72,19 @@
                 <ul id="nav-list">
 
                     <li>
-                        <a href="#skills"><img />Skills</a>
+                        <a class="skills " href="#skills"><img />Skills</a>
                     </li>
                     <li>
-                        <a href="#portfolio"><img />Portfolio</a>
+                        <a class="portfolio " href="#portfolio"><img />Portfolio</a>
                     </li>
                     <li>
-                        <a href="#goals"><img />Goals</a>
+                        <a  class="goals  " href="#goals"><img />Goals</a>
                     </li>
                     <li>
-                        <a href="#gamification"><img />Gamification</a>
+                        <a class="gamification  " href="#gamification"><img />Gamification</a>
                     </li>
                     <li>
-                        <a href="#buddhism"><img />Buddhism</a>
+                        <a  class="buddhism " href="#buddhism"><img />Buddhism</a>
                     </li>
 
                 </ul>
@@ -111,8 +111,7 @@
     <main>
         <div class="content">
 
-        <section class="tab" id="wip"><h2>This is a work in progress.
-             Please refrain from judging my junior skills... yet.</h2></section>
+        <section class="tab" id="wip"><h2>This is a work in progress!</h2><p>I'm still adding content, animations, functionality, and perfecting the appearance. I will soon show my todo list for the site here.</p></section>
         <section class="tab" id="landing">
             <h2>It's dangerous to design alone. Take this!</h2>
         <p>Greetings, fellow human (or web scraper). This is my personal website I intend to be my portfolio, resume, and place to link stuff I'm interested in.</p>
@@ -180,7 +179,7 @@
             Svaha!
         </p>
     </section >
-        <section class="tab" id="skills">
+        <section class="tab hide" id="skills">
             <h2>Skills</h2>
             <p>I can probably help you do <em>something</em>.</p>
 
@@ -194,18 +193,18 @@
 
             </ul>
         </section>
-        <section class="tab" id="porfolio"><h2>Portfolio</h2>I'm working on it.</section>
+        <section class="tab hide" id="portfolio"><h2>Portfolio</h2>I'm working on it.</section>
 
 
-        <section class="tab" id="goals"><h2>I may be too ambitious...</h2></section>
+        <section class="tab hide" id="goals"><h2>I may be too ambitious...</h2></section>
 
 
 
 
-        <section class="tab" id="gamification"><h2>Gamification's the name of the game.</h2></section>
+        <section class="tab hide" id="gamification"><h2>Gamification's the name of the game.</h2></section>
 
 
-        <section class="tab" id="buddhism"><h2>All things are empty of permanent, separate, substantial existence.</h2><p>
+        <section class="tab hide" id="buddhism"><h2>All things are empty of permanent, separate, substantial existence.</h2><p>
     Even the forms and concepts used for this proposition, are too, empty.
 </p></section>
 

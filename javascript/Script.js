@@ -1,12 +1,5 @@
 
-    /* 
-
-    
-    then set the clicked tab to the modselected var
-
-    if var1==var2 then add class widetab
-    else remove showtab from the modselected var and then set it to the new tab and add showtab
-    */
+//dual tab selection object and function
 const tabobj={
         
         
@@ -35,6 +28,7 @@ const tabobj={
                 }
                 tabobj.tabnames=[newtabname, newtabname];
                 tabobj.tabselects=[newtabselect, newtabselect];
+
                 tabobj.doubleclick=true;
             }
 
@@ -57,7 +51,6 @@ const tabobj={
             console.log(tabobj);   
         }
     }
-
     
     const changeTabs=tabobj.changeTabs;
     const navclicker=document.querySelector("nav");
@@ -65,7 +58,7 @@ const tabobj={
 
 
 
-
+//end of tab stuff
 
 
 
@@ -73,7 +66,7 @@ const tabobj={
  const debug = false;
  const debugrid = false;
 
- const sprite_size=45;
+ 
 /* 
  borders :[1,2,3,10,11,12,18,19] */
 
@@ -95,11 +88,12 @@ const views_array=[header_views, main_views, footer_views];
 /* PRIMARY CLASS//////////////////////////////////////////////////////////////////////////////////////// */
 class SVGrid{
     constructor(section_name, views_obj){
-        this.sprite_px="60px";
+        this.sprite_size=45;
         this.svghtml="";
         this.sprites=[];
         this.top_positioning=0;
-        
+       
+
         this.primary_svg=document.querySelector(`.${section_name}.svg`);
         this.section_name=section_name;
         this.viewboxes=views_obj.viewboxes;
@@ -125,7 +119,7 @@ class SVGrid{
     refreshGrid(width) {
         
         console.log("REFRESHING GRID");
-        console.log(this.height);
+        console.log(this.section_name, this.height);
         
         //determine what to do with extra height for main and possibly footer
         /* this.primary_svg.setAttribute("top", this.top_positioning.toString()); */
@@ -134,8 +128,6 @@ class SVGrid{
         this.svgridiv.style.height = this.height+"px";
         this.svgridiv.style.width= width+'px';
         
-          /*vvv not sure why i did this... for absolute positioning?vvv
-        this.svgridiv.style.top = headerheight; */
 
         this.setGridTemplates();
       
@@ -143,12 +135,12 @@ class SVGrid{
         //reset svghtml to rebuild
 
         this.buildSVGridHtml();
-        if(this.section_name!=="footer"){
-        this.svgridiv.style.transform=`translateY(${this.top_positioning}px)`;
-        }
-        else{
-            this.svgridiv.style.transform=`translateY(${this.top_positioning-10}px)`;
-        }
+        console.log(this.top_positioning);
+       
+
+        this.svgridiv.style.transform=`translateY(${-this.top_positioning}px)`;
+        
+
         if(debugrid){
             console.log(this);
         }
@@ -159,11 +151,11 @@ this.svghtml="";
 
 
     
- /* create a margin? */
+ /* create a margin? or gutter?*/
  doSizeMath(colnums){
     this.resetSpriteProps();
-    this.top_positioning=-this.height;
-    this.rownums = Math.floor(this.height/sprite_size);
+    
+    this.rownums = Math.floor(this.height/this.sprite_size);
     this.colnums=colnums;
 
     if(debugrid){
@@ -172,6 +164,7 @@ this.svghtml="";
     }
  }
 
+ //for next time refreshgrid is called
  resetSpriteProps(){
      this.svghtml="";
      this.svgridiv.innerHTML="";
@@ -181,10 +174,10 @@ this.svghtml="";
 
 
  //set style attribute of the sprite div with col and row templates
+ //could probably move this to build svgridhtml
  setGridTemplates(){
-/*     this.svgridiv.setAttribute("style",`grid-template-rows: repeat(${this.rownums}, ${this.sprite_px}); grid-template-columns: repeat(${this.colnums}, ${this.sprite_px})`); */
-    
-    this.svgridiv.setAttribute("style",`grid-template-rows: repeat(${this.rownums}, ${sprite_size}px); grid-template-columns: repeat(${this.colnums}, ${sprite_size}px)`);
+
+    this.svgridiv.setAttribute("style",`grid-template-rows: repeat(${this.rownums}, ${this.sprite_size}px); grid-template-columns: repeat(${this.colnums}, ${this.sprite_size}px)`);
     if(debugrid){
         console.log("step 1");
     }
@@ -276,11 +269,8 @@ window.onresize = resizeDebounce();
 
 //debounce so the grid doesnt refresh continuously as the window is resized
 function resizeDebounce(){
-    
-    
+    //declare so we can set, this doesnt interfere with cross function call scope
     let timeout;
-
-   
 
  return function(){
 
@@ -307,14 +297,20 @@ resizeWaiting(grid_objects, win_width);
 };     
 
 
+
+
+//i think the problem is with the logic here
+//yes, the middle svgridiv is getting shifted up too much
+//i should subtract the footer height from the middle grids offset
 function resizeWaiting(grid_objects, win_width){
     if(debug){
         console.log("resizewaiting working: "+grid_objects);
     }
     
-    const colnums=Math.ceil(parseFloat(win_width)/sprite_size);
-    let temptop=0;
+    const colnums=Math.ceil(parseFloat(win_width)/grid_objects[1].sprite_size);
+    let prevheight=0;
     
+    //after getting the computed height and setting up the positioning ofset (because of absolute positioning) calls dosizemath
     for(let i=0; i<sections; i++){  
 
         let tempgridobj=grid_objects[i];
@@ -324,11 +320,12 @@ function resizeWaiting(grid_objects, win_width){
         tempgridobj.height=tempheight;
         
         
-        tempgridobj.doSizeMath(colnums, temptop);
-        temptop+=tempheight;
-        
-        
+        tempgridobj.doSizeMath(colnums);
+        tempgridobj.top_positioning=tempheight+prevheight;
+        /* prevheight+=tempheight; */
+        grid_objects[2].top_positioning=tempheight;
         }
+        
         
 
 

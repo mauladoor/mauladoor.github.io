@@ -62,10 +62,6 @@ header, footer {
       flex-shrink: 0;
 }
 
-.svgrid-div {
-  height: 100%;
-}
-
 /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 #header-flex {
   display: -webkit-box;
@@ -367,11 +363,6 @@ footer li {
 }
 
 /*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\SVGRIDS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
-/* header>*,
-  main>*,
-  footer>*{
-      
-  } */
 header {
   z-index: 1;
 }
